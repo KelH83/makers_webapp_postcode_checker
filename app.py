@@ -1,6 +1,7 @@
 import os
 from lib.postcode_checker import PostcodeChecker
 from flask import Flask, request, render_template
+import html
 
 app = Flask(__name__)
 
@@ -14,8 +15,9 @@ def index():
 def check():
     checker = PostcodeChecker()
     postcode = request.form.get('postcode')
-    is_valid = checker.check(postcode)
-    return render_template('result.html.jinja2', postcode=postcode, is_valid=is_valid)
+    sanitized_postcode = html.escape(postcode)
+    is_valid = checker.check(sanitized_postcode)
+    return render_template('result.html.jinja2', sanitized_postcode=sanitized_postcode, is_valid=is_valid)
 
 
 if __name__ == '__main__':
