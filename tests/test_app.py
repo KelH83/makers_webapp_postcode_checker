@@ -8,6 +8,7 @@ def test_valid_postcode(page, test_web_address):
     page.goto(f"http://{test_web_address}/")
     page.fill("input[name='postcode']", "EC2A 4HJ")
     page.click("input[value='Check Postcode']")
+    page.screenshot(path="screenshot.png", full_page=True)
     expect(page.locator(".t-result")).to_contain_text("is a valid postcode")
 
 def test_invalid_postcode(page, test_web_address):
